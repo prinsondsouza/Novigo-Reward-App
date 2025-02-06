@@ -1,0 +1,231 @@
+<template>
+    <div class="ultra-container">
+        <!-- Animated Background -->
+        <div class="animated-bg">
+            <div class="gradient-sphere"></div>
+            <div class="gradient-sphere second"></div>
+        </div>
+
+         <!-- Notification Drawer -->
+         <!-- <template if:true={isDrawerOpen}>
+            <div class="drawer-backdrop" onclick={toggleNotificationDrawer}></div>
+        </template>
+        
+        <aside class={drawerClass}>
+            <div class="drawer-content">
+                <div class="drawer-header">
+                    <h2>Notifications</h2>
+                    <button class="close-button" onclick={toggleNotificationDrawer}>
+                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                    </button>
+                </div>
+                <div class="drawer-body">
+                    <template for:each={notifications} for:item="notification">
+                        <div key={notification.id} class="notification-item">
+                            <div class="notification-icon">
+                                <lightning-icon icon-name={notification.icon} size="small"></lightning-icon>
+                            </div>
+                            <div class="notification-content">
+                                <h3>{notification.title}</h3>
+                                <p>{notification.description}</p>
+                                <span class="notification-time">{notification.time}</span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class="drawer-footer">
+                    <button class="slds-button slds-button_neutral" onclick={markAllAsRead}>
+                        Mark all as read
+                    </button>
+                </div>
+            </div>
+        </aside> -->
+        <template if:true={isDrawerOpen}>
+            <div class="drawer-backdrop" onclick={toggleNotificationDrawer}></div>
+        </template>
+        
+        <aside class={drawerClass}>
+            <div class="drawer-content">
+                <div class="drawer-header">
+                    <h2>Notifications</h2>
+                    <button class="close-button" onclick={toggleNotificationDrawer}>
+                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                    </button>
+                </div>
+                <div class="drawer-body">
+                    <template for:each={groupedNotifications} for:item="appGroup">
+                        <div key={appGroup.appName} class="app-notification-group">
+                            <div class="app-header" onclick={toggleAppNotifications} data-app={appGroup.appName}>
+                                <div class="app-info">
+                                    <lightning-icon icon-name={appGroup.icon} size="small"></lightning-icon>
+                                    <span class="app-name">{appGroup.appName}</span>
+                                    <span class="notification-count">({appGroup.notifications.length})</span>
+                                </div>
+                                <lightning-icon 
+                                    icon-name='utility:chevrondown'
+                                    size="x-small"
+                                    class="toggle-icon">
+                                </lightning-icon>
+                            </div>
+                            <div >
+                                <template for:each={appGroup.notifications} for:item="notification">
+                                    <div key={notification.id} class="notification-item">
+                                        <div class="notification-content">
+                                            <h3>{notification.title}</h3>
+                                            <p>{notification.description}</p>
+                                            <span class="notification-time">{notification.time}</span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class="drawer-footer">
+                    <button class="slds-button slds-button_neutral" onclick={markAllAsRead}>
+                        Mark all as read
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        
+        <!-- Main Content -->
+        <div class="content-layer">
+            <!-- Header -->
+            <header class="modern-header">
+                <div class="logo-container">
+                    <img src={novigoLogo} alt="Novigo Logo" class="logo"/>
+                </div>
+                <nav class="nav-menu">
+                    <div class="nav-item active mobile-hidden">
+                        <lightning-icon icon-name="utility:home" size="x-small"></lightning-icon>
+                        <span>Home</span>
+                    </div>
+                    <div class="nav-item mobile-hidden">
+                        <lightning-icon icon-name="utility:apps" size="x-small"></lightning-icon>
+                        <span>Apps</span>
+                    </div>
+                    <div class="nav-item" onclick={toggleNotificationDrawer}>
+                        <lightning-icon icon-name="utility:notification" size="small" class="notification-logo"></lightning-icon>
+                        <span>(10)</span>
+                    </div>
+                    <div class="search-bar mobile-hidden">
+                        <lightning-icon icon-name="utility:search" size="x-small"></lightning-icon>
+                        <input type="text" placeholder="Search..."/>
+                    </div>
+                </nav>
+            </header>
+
+            <!-- Main Content Sections -->
+            <main class="main-content">
+                <!-- Quick Access Section -->
+                <section class="quick-access">
+                    <h2>Quick Access</h2>
+                    <div class="cards-wrapper">
+                        <div class="modern-card" style={backgroundStyleIt}  onclick={handleHelpdeskClick}>
+                            <div class="card-icon-container">
+                                <lightning-icon icon-name="utility:help" size="medium"></lightning-icon>
+                            </div>
+                            <div class="card-content">
+                                <h3>IT Helpdesk</h3>
+                                <p>Get instant technical support</p>
+                            </div>
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <lightning-icon icon-name="utility:clock" size="xx-small"></lightning-icon>
+                                    Avg Response: 15m
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="modern-card" style={backgroundStyleHr} onclick={handleKekaClick}>
+                            <div class="card-icon-container hr">
+                                <lightning-icon icon-name="utility:user" size="medium"></lightning-icon>
+                            </div>
+                            <div class="card-content">
+                                <h3>HR Portal</h3>
+                                <p>Manage your HR activities</p>
+                            </div>
+                            <div class="card-stats">
+                                <span class="status-badge">
+                                    <span class="status-dot"></span>
+                                    Available Now
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="modern-card" style={backgroundStyleProjects} onclick={handleProjectClick}>
+                            <div class="card-icon-container projects">
+                                <lightning-icon icon-name="utility:layout" size="medium"></lightning-icon>
+                            </div>
+                            <div class="card-content">
+                                <h3>Projects</h3>
+                                <p>View your assignments</p>
+                            </div>
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <lightning-icon icon-name="utility:record" size="xx-small"></lightning-icon>
+                                    3 Active Projects
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Salesforce Apps Section -->
+                <section class="quick-access">
+                    <h2>Salesforce Apps</h2>
+                    <div class="cards-wrapper">
+                        <div class="modern-card" style={backgroundStyleRecruitment}  onclick={handleHelpdeskClick}>
+                            <div class="card-icon-container">
+                                <lightning-icon icon-name="utility:help" size="medium"></lightning-icon>
+                            </div>
+                            <div class="card-content">
+                                <h3>Recruitment</h3>
+                            </div>
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <lightning-icon icon-name="utility:clock" size="xx-small"></lightning-icon>
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="modern-card" style={backgroundStyleOnboarding} onclick={handleKekaClick}>
+                            <div class="card-icon-container hr">
+                                <lightning-icon icon-name="utility:user" size="medium"></lightning-icon>
+                            </div>
+                            <div class="card-content">
+                                <h3>Onboarding App</h3>
+                                <p>Manage your new Joinees</p>
+                            </div>
+                            <div class="card-stats">
+                                <span class="status-badge">
+                                    <span class="status-dot"></span>
+                                    Available Now
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="modern-card" style={backgroundStyleRewards}  onclick={handleRewardClick}>
+                            <div class="card-icon-container projects">
+                                <lightning-icon icon-name="utility:ribbon" size="medium"></lightning-icon>
+                            </div>
+                            <div class="card-content">
+                                <h3>R&R</h3>
+                                <p>Raise a reward request</p>
+                            </div>
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <lightning-icon icon-name="utility:record" size="xx-small"></lightning-icon>
+                                    1 Active Request
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+</template>

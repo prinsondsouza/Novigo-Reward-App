@@ -1,0 +1,11 @@
+<template>
+    <template if:true={isLoginPage}>
+        <c-login onloginclick = {handleLoginClick}></c-login>
+    </template>
+    <template if:true={isAppPage}>
+        <c-novigo onrewardclick = {handleRewardClick}></c-novigo>
+    </template>
+    <template if:true={isRewardPage}>
+        <c-rewards-recognition onbackclick={handleBackClick}></c-rewards-recognition>
+    </template>
+</template>

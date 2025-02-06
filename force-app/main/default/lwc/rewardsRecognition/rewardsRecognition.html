@@ -1,0 +1,154 @@
+<template>
+    <div class="modern-container">
+        <div class="login-wrapper">
+            <div class="login-card">
+                <div class="brand">
+                    <lightning-icon icon-name="utility:back" size="medium" class="back-icon" onclick={handleBackClick}></lightning-icon>
+                    <h1>Rewards & Recognition</h1>
+                </div>
+                
+                <div class="login-form">
+                    <div class="cards-wrapper">
+                        <!-- Submit a Reward Request -->
+                        <div class="modern-card" onclick={handleRewardSubmissionClick}>
+                            <div class="card-icon-container">
+                                <lightning-icon icon-name="utility:ribbon" size="medium"></lightning-icon>
+                            </div>
+                            <div class="card-content">
+                                <h3>Submit Reward Request</h3>
+                                <p>Raise a new reward request for your team.</p>
+                            </div>
+                        </div>
+                
+                        <!-- View Active Rewards -->
+                        <div class="modern-card" onclick={handleActiveRewardsClick}>
+                            <div class="card-icon-container">
+                                <lightning-icon icon-name="utility:hourglass" size="medium"></lightning-icon>
+                            </div>
+                            <div class="card-content">
+                                <h3>Active Rewards</h3>
+                                <p>Track ongoing reward requests.</p>
+                            </div>
+                            <div class="card-stats">
+                                <span class="stat">
+                                    <lightning-icon icon-name="utility:clock" size="xx-small"></lightning-icon>
+                                    2 Pending Approvals
+                                </span>
+                            </div>
+                        </div>
+                
+                        <!-- Reward History -->
+                        <div class="modern-card" onclick={handleRewardHistoryClick}>
+                            <div class="card-icon-container">
+                                <lightning-icon icon-name="utility:list" size="medium"></lightning-icon>
+                            </div>
+                            <div class="card-content">
+                                <h3>Reward History</h3>
+                                <p>View the history of rewards issued.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Reward Request Form -->
+                    <template if:true={showRewardSubmission}>
+                        <div class="form-container">
+                            <h3>Submit Reward Request</h3>
+                            <div class="form-group">
+                                <label for="employeeName">Employee Name</label>
+                                <div class="input-wrapper">
+                                    <lightning-icon icon-name="utility:user" size="x-small" class="input-icon"></lightning-icon>
+                                    <input type="text" id="employeeName" placeholder="Enter employee name" value={employeeName} onchange={handleInputChange}/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rewardDescription">Reward Description</label>
+                                <div class="input-wrapper">
+                                    <lightning-icon icon-name="utility:note" size="x-small" class="input-icon"></lightning-icon>
+                                    <textarea id="rewardDescription" placeholder="Enter reward description" value={rewardDescription} onchange={handleInputChange}></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="fileUpload">Upload Supporting Document</label>
+                                <div class="input-wrapper">
+                                    <lightning-icon icon-name="utility:upload" size="x-small" class="input-icon"></lightning-icon>
+                                    <input type="file" id="fileUpload" onchange={handleFileUpload}/>
+                                </div>
+                            </div>
+                            <button class="login-btn" onclick={submitRewardRequest}>Submit</button>
+                        </div>
+                    </template>
+
+                    <!-- Active Rewards List -->
+                    <template if:true={showActiveRewards}>
+                        <div class="list-container">
+                            <h3>Active Rewards</h3>
+                            <table class="status-table">
+                                <thead>
+                                    <tr>
+                                        <th>Request ID</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th>Approved By / To Be Approved By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="pending">
+                                        <td>Request #2458</td>
+                                        <td>Pending Review</td>
+                                        <td>2025-01-12</td>
+                                        <td>Manager John Doe</td>
+                                    </tr>
+                                    <tr class="approved">
+                                        <td>Request #2457</td>
+                                        <td>Approved</td>
+                                        <td>2025-01-10</td>
+                                        <td>Manager Jane Smith</td>
+                                    </tr>
+                                    <tr class="rejected">
+                                        <td>Request #2456</td>
+                                        <td>Rejected</td>
+                                        <td>2025-01-08</td>
+                                        <td>Manager John Doe</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+
+                    <!-- Reward History List -->
+                    <template if:true={showRewardHistory}>
+                        <div class="list-container">
+                            <h3>Reward History</h3>
+                            <table class="status-table">
+                                <thead>
+                                    <tr>
+                                        <th>Reward ID</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Reward 1</td>
+                                        <td>$100</td>
+                                        <td>2023-01-01</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reward 2</td>
+                                        <td>$200</td>
+                                        <td>2023-02-01</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reward 3</td>
+                                        <td>$300</td>
+                                        <td>2023-03-01</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

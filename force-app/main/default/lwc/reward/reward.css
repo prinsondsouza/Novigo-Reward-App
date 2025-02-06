@@ -1,0 +1,36 @@
+.ultra-container {
+    min-height: 100vh;
+    background: #f8fafc; /* Lighter background */
+    position: relative;
+    padding: 2rem;
+    /* overflow: hidden; */
+}
+.content-layer{
+    padding: 2rem;
+    background: #ffffff; /* Light background */
+    border-radius: 1rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.hero-left{
+    width: 50%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.hero-right{
+    width: 50%;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-image{
+    width: 70%;
+    height: auto;
+}
